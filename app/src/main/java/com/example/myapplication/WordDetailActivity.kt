@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.app.Activity
+import android.os.Build
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -70,7 +71,12 @@ class WordDetailActivity : AppCompatActivity() {
     }
     
     private fun loadWordDetails() {
-        currentEntry = intent.getParcelableExtra("entry", DictionaryEntry::class.java)
+        @Suppress("DEPRECATION")
+currentEntry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    intent.getParcelableExtra("entry", DictionaryEntry::class.java)
+} else {
+    intent.getParcelableExtra("entry")
+}
         currentEntry?.let { entry ->
             wordText.text = entry.word
             meaningText.text = entry.meaning
@@ -115,7 +121,13 @@ class WordDetailActivity : AppCompatActivity() {
         
         if (requestCode == REQUEST_EDIT_ENTRY && resultCode == Activity.RESULT_OK) {
             val action = data?.getStringExtra("action")
-            val entry = data?.getParcelableExtra<DictionaryEntry>("entry", DictionaryEntry::class.java)
+            @Suppress("DEPRECATION")
+val entry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    data?.getParcelableExtra("entry", DictionaryEntry::class.java)
+} else {
+    data?.getParcelableExtra("entry")
+}
+
             
             when (action) {
                 "delete" -> {
