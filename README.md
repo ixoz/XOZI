@@ -157,7 +157,7 @@ implementation("com.google.android.material:material:1.11.0")
 
 Potential improvements for future versions:
 
-- [*] Export/Import functionality
+- [X] Export/Import functionality
 - [ ] Categories/Tags for words
 - [ ] Pronunciation support
 - [ ] Offline dictionary integration
