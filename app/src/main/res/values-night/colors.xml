@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Override default colors for dark theme -->
+    <color name="background_color">@color/background_color_dark</color>
+    <color name="surface_color">@color/surface_color_dark</color>
+    <color name="text_primary">@color/text_primary_dark</color>
+    <color name="text_secondary">@color/text_secondary_dark</color>
+    <color name="card_stroke">@color/card_stroke_dark</color>
+    <color name="icon_color">@color/icon_color_dark</color>
+</resources> 
