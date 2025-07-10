@@ -26,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var appVersionText: TextView
     private lateinit var exportCard: MaterialCardView
     private lateinit var importCard: MaterialCardView
+    private lateinit var githubCard: MaterialCardView
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var backupManager: BackupManager
     private val viewModel: DictionaryViewModel by viewModels()
@@ -57,6 +58,7 @@ class SettingsActivity : AppCompatActivity() {
         appVersionText = findViewById(R.id.appVersionText)
         exportCard = findViewById(R.id.exportCard)
         importCard = findViewById(R.id.importCard)
+        githubCard = findViewById(R.id.githubCard)
         
         // Setup toolbar
         findViewById<Toolbar>(R.id.toolbar).apply {
@@ -76,6 +78,10 @@ class SettingsActivity : AppCompatActivity() {
         
         importCard.setOnClickListener {
             selectBackupFile()
+        }
+
+        githubCard.setOnClickListener {
+            openUrl("https://github.com/ixoz")
         }
     }
     
@@ -98,6 +104,12 @@ class SettingsActivity : AppCompatActivity() {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+    
+    private fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
     
     private fun exportBackup() {
