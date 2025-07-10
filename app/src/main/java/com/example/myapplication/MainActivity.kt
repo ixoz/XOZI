@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.app.Activity
+import android.os.Build
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -31,68 +32,80 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: DictionaryViewModel by viewModels()
     
     private val addEditEntryLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        try {
-            if (result.resultCode == Activity.RESULT_OK) {
-                val action = result.data?.getStringExtra("action")
-                val entry = result.data?.getParcelableExtra<DictionaryEntry>("entry", DictionaryEntry::class.java)
-                
-                when (action) {
-                    "delete" -> {
-                        entry?.let {
-                            viewModel.delete(it)
-                            Toast.makeText(this, "Word deleted successfully", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else -> {
-                        entry?.let {
-                            if (it.id == 0L) {
-                                // New entry
-                                viewModel.insert(it)
-                                Toast.makeText(this, "Word added successfully", Toast.LENGTH_SHORT).show()
-                            } else {
-                                // Updated entry
-                                viewModel.update(it)
-                                Toast.makeText(this, "Word updated successfully", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+    ActivityResultContracts.StartActivityForResult()
+) { result ->
+    try {
+        if (result.resultCode == Activity.RESULT_OK) {
+            val action = result.data?.getStringExtra("action")
+
+            @Suppress("DEPRECATION")
+            val entry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                result.data?.getParcelableExtra("entry", DictionaryEntry::class.java)
+            } else {
+                result.data?.getParcelableExtra("entry")
+            }
+
+            when (action) {
+                "delete" -> {
+                    entry?.let {
+                        viewModel.delete(it)
+                        Toast.makeText(this, "Word deleted successfully", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error processing entry: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
-    
-    private val wordDetailLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        try {
-            if (result.resultCode == Activity.RESULT_OK) {
-                val action = result.data?.getStringExtra("action")
-                val entry = result.data?.getParcelableExtra<DictionaryEntry>("entry", DictionaryEntry::class.java)
-                
-                when (action) {
-                    "delete" -> {
-                        entry?.let {
-                            viewModel.delete(it)
-                            Toast.makeText(this, "Word deleted successfully", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else -> {
-                        entry?.let {
-                            // Updated entry from detail view
+                else -> {
+                    entry?.let {
+                        if (it.id == 0L) {
+                            viewModel.insert(it)
+                            Toast.makeText(this, "Word added successfully", Toast.LENGTH_SHORT).show()
+                        } else {
                             viewModel.update(it)
                             Toast.makeText(this, "Word updated successfully", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error processing entry: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    } catch (e: Exception) {
+        Toast.makeText(this, "Error processing entry: ${e.message}", Toast.LENGTH_SHORT).show()
     }
+}
+
+    
+    private val wordDetailLauncher = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+) { result ->
+    try {
+        if (result.resultCode == Activity.RESULT_OK) {
+            val action = result.data?.getStringExtra("action")
+
+            // ✅ Version-safe getParcelableExtra
+            @Suppress("DEPRECATION")
+            val entry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                result.data?.getParcelableExtra("entry", DictionaryEntry::class.java)
+            } else {
+                result.data?.getParcelableExtra("entry")
+            }
+
+            when (action) {
+                "delete" -> {
+                    entry?.let {
+                        viewModel.delete(it)
+                        Toast.makeText(this, "Word deleted successfully", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else -> {
+                    entry?.let {
+                        viewModel.update(it)
+                        Toast.makeText(this, "Word updated successfully", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    } catch (e: Exception) {
+        Toast.makeText(this, "Error processing entry: ${e.message}", Toast.LENGTH_SHORT).show()
+    }
+}
+
     
     private val settingsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
