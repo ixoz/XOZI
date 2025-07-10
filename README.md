@@ -65,7 +65,7 @@ app/src/main/res/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ixoz/XOZI
    cd MyApplication2
    ```
 
@@ -157,7 +157,7 @@ implementation("com.google.android.material:material:1.11.0")
 
 Potential improvements for future versions:
 
-- [ ] Export/Import functionality
+- [*] Export/Import functionality
 - [ ] Categories/Tags for words
 - [ ] Pronunciation support
 - [ ] Offline dictionary integration
