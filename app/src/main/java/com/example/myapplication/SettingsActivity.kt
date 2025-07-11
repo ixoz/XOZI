@@ -98,7 +98,7 @@ class SettingsActivity : AppCompatActivity() {
         darkThemeSwitch.isChecked = isDarkTheme
         
         // Set app version
-        appVersionText.text = "1.0.0"
+        appVersionText.text = "v1.5.1"
     }
     
     private fun saveDarkThemePreference(isDark: Boolean) {
