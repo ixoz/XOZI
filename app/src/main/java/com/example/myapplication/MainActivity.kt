@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var settingsButton: ImageButton
     private lateinit var adapter: DictionaryAdapter
+    private lateinit var streakManager: StreakManager
     
     private val viewModel: DictionaryViewModel by viewModels()
     
@@ -56,6 +59,10 @@ class MainActivity : AppCompatActivity() {
                     entry?.let {
                         if (it.id == 0L) {
                             viewModel.insert(it)
+                            // Record learning activity for new word
+                            lifecycleScope.launch {
+                                streakManager.recordLearningActivity(1)
+                            }
                             Toast.makeText(this, "Word added successfully", Toast.LENGTH_SHORT).show()
                         } else {
                             viewModel.update(it)
@@ -124,6 +131,9 @@ class MainActivity : AppCompatActivity() {
             setupRecyclerView()
             setupObservers()
             setupClickListeners()
+            
+            // Initialize streak manager
+            streakManager = StreakManager(this)
             
             // Check and request permissions on first launch
             checkPermissionsOnStart()

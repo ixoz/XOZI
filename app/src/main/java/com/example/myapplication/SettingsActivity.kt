@@ -26,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var appVersionText: TextView
     private lateinit var exportCard: MaterialCardView
     private lateinit var importCard: MaterialCardView
+    private lateinit var streakCard: MaterialCardView
     private lateinit var githubCard: MaterialCardView
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var backupManager: BackupManager
@@ -58,6 +59,7 @@ class SettingsActivity : AppCompatActivity() {
         appVersionText = findViewById(R.id.appVersionText)
         exportCard = findViewById(R.id.exportCard)
         importCard = findViewById(R.id.importCard)
+        streakCard = findViewById(R.id.streakCard)
         githubCard = findViewById(R.id.githubCard)
         
         // Setup toolbar
@@ -78,6 +80,11 @@ class SettingsActivity : AppCompatActivity() {
         
         importCard.setOnClickListener {
             selectBackupFile()
+        }
+
+        streakCard.setOnClickListener {
+            val intent = Intent(this@SettingsActivity, StreakActivity::class.java)
+            startActivity(intent)
         }
 
         githubCard.setOnClickListener {

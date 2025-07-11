@@ -55,6 +55,16 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
             
+        <activity
+            android:name=".StreakActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+            
+        <activity
+            android:name=".ContributionChartActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+            
     </application>
 
 </manifest>

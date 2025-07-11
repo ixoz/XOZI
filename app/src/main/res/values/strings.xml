@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">XOZI Dictionary</string>
+    <string name="learning_streak">Learning Streak</string>
+    <string name="current_streak">Current Streak</string>
+    <string name="longest_streak">Longest Streak</string>
+    <string name="total_learning_days">Total Learning Days</string>
+    <string name="learning_activity">Learning Activity</string>
+    <string name="learning_progress">Learning Progress</string>
+    <string name="track_daily_learning">Track your daily learning progress</string>
+    <string name="learning_activity_description">Your learning activity over the past year</string>
+    <string name="view_detailed_chart">View Detailed Chart</string>
+    <string name="learning_activity_chart">Learning Activity Chart</string>
+
 </resources>
