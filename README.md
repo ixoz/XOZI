@@ -159,7 +159,7 @@ Potential improvements for future versions:
 
 - [X] Export/Import functionality
 - [ ] Categories/Tags for words
-- [ ] Pronunciation support
+- [X] Pronunciation support
 - [ ] Offline dictionary integration
 - [ ] Cloud backup
 - [ ] Multiple language support
