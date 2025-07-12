@@ -164,7 +164,7 @@ Potential improvements for future versions:
 - [ ] Cloud backup
 - [ ] Multiple language support
 - [ ] Quiz/Flashcard mode
-- [ ] Statistics and progress tracking
+- [X] Statistics and progress tracking
 
 ## Contributing
 
