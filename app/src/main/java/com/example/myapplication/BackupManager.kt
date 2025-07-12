@@ -246,7 +246,7 @@ class BackupManager(private val context: Context) {
                         } ?: System.currentTimeMillis()
                         
                         if (word.isNotEmpty() && meaning.isNotEmpty()) {
-                            entries.add(DictionaryEntry(id, word, meaning, imagePath, createdAt))
+                            entries.add(DictionaryEntry(id, word, meaning, null, imagePath, createdAt))
                         }
                     } catch (e: Exception) {
                         Log.e("BackupManager", "Error parsing entry: $currentEntry", e)

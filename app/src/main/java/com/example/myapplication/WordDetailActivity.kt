@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import java.io.File
+import java.util.Locale
 
 class WordDetailActivity : AppCompatActivity() {
     
@@ -25,8 +27,10 @@ class WordDetailActivity : AppCompatActivity() {
     private lateinit var btnEdit: ImageButton
     private lateinit var btnDelete: MaterialButton
     private lateinit var btnClose: MaterialButton
+    private lateinit var playPronunciationButton: ImageButton
     
     private var currentEntry: DictionaryEntry? = null
+    private var textToSpeech: TextToSpeech? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class WordDetailActivity : AppCompatActivity() {
         
         initializeViews()
         setupClickListeners()
+        initializeTextToSpeech()
         loadWordDetails()
     }
     
@@ -45,6 +50,7 @@ class WordDetailActivity : AppCompatActivity() {
         btnEdit = findViewById(R.id.btnEditDetail)
         btnDelete = findViewById(R.id.btnDeleteDetail)
         btnClose = findViewById(R.id.btnCloseDetail)
+        playPronunciationButton = findViewById(R.id.playPronunciationButton)
         
         // Setup toolbar
         findViewById<Toolbar>(R.id.toolbar).apply {
@@ -67,6 +73,18 @@ class WordDetailActivity : AppCompatActivity() {
         
         btnClose.setOnClickListener {
             finish()
+        }
+        
+        playPronunciationButton.setOnClickListener {
+            playPronunciation()
+        }
+    }
+    
+    private fun initializeTextToSpeech() {
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                textToSpeech?.setLanguage(Locale.US)
+            }
         }
     }
     
@@ -92,6 +110,13 @@ currentEntry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             } else {
                 imageCard.visibility = View.GONE
             }
+        }
+    }
+    
+    private fun playPronunciation() {
+        currentEntry?.let { entry ->
+            val textToSpeak = entry.pronunciation ?: entry.word
+            textToSpeech?.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "pronunciation")
         }
     }
     
@@ -153,6 +178,12 @@ val entry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 }
             }
         }
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        textToSpeech?.stop()
+        textToSpeech?.shutdown()
     }
     
     companion object {

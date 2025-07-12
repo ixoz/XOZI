@@ -10,5 +10,10 @@
     <string name="learning_activity_description">Your learning activity over the past year</string>
     <string name="view_detailed_chart">View Detailed Chart</string>
     <string name="learning_activity_chart">Learning Activity Chart</string>
+    <string name="uk_pronunciation">UK Pronunciation</string>
+    <string name="pronunciation_hint">e.g., /prəˈnʌnsiˈeɪʃən/</string>
+    <string name="test_pronunciation">Test pronunciation</string>
+    <string name="play_pronunciation">Play pronunciation</string>
+    <string name="enter_word_or_pronunciation">Please enter a word or pronunciation first</string>
 
 </resources>

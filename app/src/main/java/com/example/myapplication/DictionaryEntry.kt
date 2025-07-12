@@ -12,6 +12,7 @@ data class DictionaryEntry(
     val id: Long = 0,
     val word: String,
     val meaning: String,
+    val pronunciation: String? = null,
     val imagePath: String? = null,
     val createdAt: Long = System.currentTimeMillis()
 ) : Parcelable 
